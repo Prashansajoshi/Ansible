@@ -1,0 +1,132 @@
+---
+- name: Hosting web app from ansible
+  hosts: dev
+  become: true
+  gather_facts: true
+
+  tasks:
+    # - name: update and upgrade
+    #   apt:
+    #     update_cache: yes
+    #     cache_valid_time: 86400
+      
+
+    # - name: Upgrade all packages
+    #   apt:
+    #     upgrade: dist
+
+
+    # - name: Ensure that git is installed
+    #   apt:
+    #     name: git
+    #     state: present
+
+
+    # - name: Clone the GitHub repository
+    #   git:
+    #     repo: https://github.com/SameepSig/Node_React_CRUD.git
+    #     dest: /home/ubuntu/files
+    #     force: yes
+
+
+    # - name: Install node and npm
+    #   ansible.builtin.apt:
+    #     pkg:
+    #       - npm
+    #       - nodejs
+    #     state: present
+    #     update_cache: true
+
+
+    # - name: Install PM2 globally
+    #   npm:
+    #     name: pm2
+    #     global: yes
+
+
+    # - name: Install Mysql
+    #   package:
+    #     name: "{{item}}"
+    #     state: present
+    #     update_cache: yes
+    #   loop:
+    #     - mysql-server
+    #     - python3-mysqldb
+    #     - libmysqlclient-dev
+
+
+    # - name: Ensure frontend dependencies are installed
+    #   command: npm install
+    #   args: 
+    #     chdir: /home/ubuntu/files/frontend
+
+
+    # - name: Start frontend server
+    #   command: npm run dev
+    #   args:
+    #     chdir: /home/ubuntu/files/frontend
+    #   async: 1000
+    #   poll: 0
+    #   register: frontend_job
+
+
+    # - name: Ensure backend dependencies are installed
+    #   command: npm install
+    #   args:
+    #     chdir: /home/ubuntu/files/backend
+
+    # - name: Start backend server
+    #   command: npm start
+    #   args:
+    #     chdir: /home/ubuntu/files/backend
+    #   async: 1000
+    #   poll: 0
+    #   register: backend_job
+
+
+    # - name: Create MYSQL db
+    #   mysql_db:
+    #     name: test_db
+    #     state: present
+    #     login_user: root
+    #     login_password:
+
+    # - name: Start MySQL service
+    #   service:
+    #     name: mysql
+    #     state: started
+    #     enabled: yes
+
+    # - name: Create MySQL user
+    #   mysql_user:
+    #     name: test_user
+    #     password: test_0000
+    #     priv: "*.*:ALL"
+    #     host: localhost
+    #     state: present
+
+
+    # - name: Import database dump into test_db
+    #   mysql_db:
+    #     name: test_db
+    #     state: import
+    #     target: files/db.sql
+
+    
+    - name: Creating .env file
+      copy:
+        dest: /home/ubuntu/files/backend/.env
+        content: |
+          APP_PORT=3000  
+
+          ### DB_HOST could be remote host, proxy or localhost URL but must me mysql
+          DB_HOST= localhost
+          DB_PORT=3306
+          DB_NAME=test_db
+
+          CRED= from_env
+
+          ### If you are Passing Credentials Directly from ENV
+          DB_USER= test_user
+          DB_PASSWORD= test_0000
+
